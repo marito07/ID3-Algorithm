@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Algoritmo ID3 - IC</title>
+        <!-- <script src="static/js/jquery-3.5.1.min.js"></script>  Jquery -->
+        <script type="text/javascript" src="static/js/main.js"></script>  <!-- Funciones de Javascript implementadas -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    </head>
+    <body>
+        <div class="container">
+            <h1>Algoritmo ID3</h1>
+            <div>
+                <input type="file" id="ficheroAtributos" onchange="openAtributos(event)">
+                <input type="file" id="ficheroEjemplos" onchange="openEjemplo(event)">
+                <button class="btn btn-primary" onclick="aplicationStart(event)">Empezar aplicación</button>
+            </div>
+            
+            <div id="sol"></div>
+        </div>
+        
+
+    </body>
+</html>
