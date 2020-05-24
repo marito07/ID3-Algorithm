@@ -9,12 +9,18 @@
     <body>
         <div class="container">
             <h1>Algoritmo ID3</h1>
-            <div>
-                <input type="file" id="ficheroAtributos" onchange="openAtributos(event)">
-                <input type="file" id="ficheroEjemplos" onchange="openEjemplo(event)">
-                <button class="btn btn-primary" onclick="aplicationStart(event)">Empezar aplicación</button>
+            <div class="d-flex flex-column mb-3">
+                <div class="d-flex flex-row align-items-center">
+                    <h6 class="mr-2 d-flex flex-row">Cargue el archivo de <div class="text-primary ml-1">atributos</div>: (AtributosJuego.txt) </h6>
+                    <input class="mb-2" type="file" id="ficheroAtributos" onchange="openAtributos(event)">
+                </div>
+                <div class="d-flex flex-row align-items-center">
+                    <h6 class="mr-2 d-flex flex-row">Cargue el archivo de <div class="text-primary ml-1">ejemplos</div>: (Juego.txt) </h6>
+                    <input type="file" id="ficheroEjemplos" onchange="openEjemplo(event)">
+                </div>
             </div>
-            
+            <button class="btn btn-primary" onclick="aplicationStart(event)">Empezar aplicación</button>
+
             <div id="sol"></div>
         </div>
         
