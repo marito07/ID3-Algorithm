@@ -6,7 +6,7 @@ $(function () {
   $('#ficheroEjemplos').prop('disabled', true); // Desactiva el boton de carga de fichero de Ejemplos
   $('#aplicationStart').prop('disabled', true); // Desactiva el boton de inicio de la aplicación
 
-  $('#ficheroAtributos').change(function () { // Carga la lista de atributos del input
+  $('#ficheroAtributos').change(function () { // Carga la lista de atributos del fichero "AtributosJuego.txt" pasado desde el Input
     listaDeAtributos = [];
     var input = event.target;
     var reader = new FileReader();
@@ -25,7 +25,7 @@ $(function () {
     reader.readAsText(input.files[0]);
   });
 
-  $('#ficheroEjemplos').change(function () { // Carga la lista de Ejemplos del input
+  $('#ficheroEjemplos').change(function () { // Carga la lista de Ejemplos del fichero "Juego.txt" pasado desde el Input
 
     listaDeEjemplos = []
     var input = event.target;
@@ -84,7 +84,12 @@ $(function () {
 
   function id3(listEjem, listAtrib, atributoResultado, caracteres) { // Implementación del algoritmo recursivo
     // Carga los valores de "si" y "no" cada atributo ---------------------------------------------------------
-    if (listAtrib.length > 0) { // Caso base: Si el array tiene más de un elemento entra, si no no
+    console.log('---- Inicio de la función ID3 ----');
+    console.log('-------- Lista de Atributos: ');
+    console.log(listAtrib);
+    console.log('-------- Lista de Ejemplos: ');
+    console.log(listEjem);
+    if (listAtrib.length > 0) { // Caso base 1: Si el array tiene más de un elemento entra, si no no
 
       let sonIgualesEnSigno = true;
       let before = listEjem[0][atributoResultado];
@@ -97,14 +102,15 @@ $(function () {
           i++;
         }
       }
-      if (sonIgualesEnSigno) {
+      if (sonIgualesEnSigno) { // Caso base 2
         let color = "green";
-        if(before.trim() == "no"){
+        if (before.trim() == "no") {
           color = "red";
         }
         $('#sol').append('<div style="color: ' + color + '">' + caracteres + "---> (" + before.trim() + ")</div>");
+        console.log('---- Final de la Rama (con valor: ' + before.trim() + ')  ----');
       }
-      else {
+      else { // Caso recursivo
         var salida = {};
         for (var aux = 0; aux < listAtrib.length - 1; aux++) {
           salida[listAtrib[aux]] = {};
@@ -164,7 +170,7 @@ $(function () {
           }
         }
         // ---------------------------------------------------------------------------------------
-        console.log('--- Valores de los atributos pi,ni,ai, y N ----')
+        console.log('--- Valores de los atributos pi,ni,ai, y N Incluye el merito de cada atributo ----')
         console.log(salida);
 
         // Seleccionar al atributo con el merito mas bajo ----------------------------------------
@@ -177,25 +183,25 @@ $(function () {
           }
         }
         console.log("El atributo seleccionado es: " + AtributoSeleccionado);
-        $('#sol').append('<div style="color: blue;">' + caracteres + "Nodo: " + AtributoSeleccionado + '</div>');
-        var ramas = Object.keys(salida[AtributoSeleccionado]);
-        for (let i = 0; i < ramas.length; i++) {
+        $('#sol').append('<div style="color: blue;">' + caracteres + " Nodo: " + AtributoSeleccionado + '</div>');
+        var ramas = Object.keys(salida[AtributoSeleccionado]); // Las ramas del atributo seleccionado
+        for (let i = 0; i < ramas.length; i++) { // Se recorre recursivamente cada rama
           if (ramas[i] !== 'N' && ramas[i] !== 'merito') {
-            $('#sol').append('<div style="color: purple;">' + caracteres + "= Rama: " + ramas[i] + '</div>');
-            let nuevaListaEje = [];
-            let nuevaListaAtrib = [];
+            $('#sol').append('<div style="color: purple;">' + caracteres + " = Rama: " + ramas[i] + '</div>');
+            let nuevaListaEje = []; // Nueva lista de Ejemplos
+            let nuevaListaAtrib = []; // Nueva lista de Atributos
 
-            for(let q = 0; q < listEjem.length; q++){
-              if(listEjem[q][AtributoSeleccionado] === ramas[i]){
+            for (let q = 0; q < listEjem.length; q++) {
+              if (listEjem[q][AtributoSeleccionado] === ramas[i]) {
                 nuevaListaEje.push(listEjem[q]);
               }
             }
-            for(let q = 0; q < listAtrib.length; q++){ 
-              if(listAtrib[q] !== AtributoSeleccionado){
+            for (let q = 0; q < listAtrib.length; q++) {
+              if (listAtrib[q] !== AtributoSeleccionado) {
                 nuevaListaAtrib.push(listAtrib[q]);
               }
             }
-            id3(nuevaListaEje, nuevaListaAtrib, atributoResultado, caracteres + '--');
+            id3(nuevaListaEje, nuevaListaAtrib, atributoResultado, '-' + caracteres + '--'); // Se ejecuta la funcion ID3 por cada rama
           }
         }
       }
@@ -218,19 +224,6 @@ $(function () {
     }
 
   }
-
-  function valorDeN() {
-
-  }
-
-  function valorDeR() {
-
-  }
-
-  function valorDeP() {
-
-  }
-
   // Funciones a usar en el algoritmo
 
   function logBase2(num) { // Logaritmo en Base 2
